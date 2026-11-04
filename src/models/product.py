@@ -8,3 +8,32 @@ class Product:
 
     def get_total_price(self):
         return self.price * self.quantity
+
+
+    def __str__(self):
+        return f"Товар: {self.name}, Цена: {self.price} руб., Количество: {self.quantity}"
+
+
+    def __repr__(self):
+        return f"Product({self.name}, {self.price}, {self.quantity})"
+
+    
+    def __it__(self, other):
+        if not isinstance(other, Product):
+            return False
+
+        return self.price < other.price
+
+
+    def __eq__(self, other):
+        if not isinstance(other, Product):
+            return False
+
+        return self.name == other.name and self.price == other.price
+
+
+    def __str__(self):
+        return f"Товар {self.name}, Цена: {self.price}, Количество: {self.quantity}"
+
+
+    

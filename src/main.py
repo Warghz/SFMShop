@@ -994,5 +994,57 @@ payments = [
     PayPalPayment(2000, "user@paypal.com")
 ]
 
-for payment in payments:
-    print(payment.process_payment())
+# for payment in payments:
+    # print(payment.process_payment())
+
+# Файл src/main.py
+# Практика: Задание 1 - Добавление __str__ и __repr__
+
+product = Product("Ноутбук", 5000, 10)
+
+# print(product)
+# print(repr(product))
+
+# Практика: Задание 2 - Корзина с __len__ и __add__
+class Cart:
+    def __init__(self, owner, items):
+        self.owner = owner
+        self.items = items
+
+
+    def __len__(self):
+        return len(self.items)
+
+
+    def __add__(self, other):
+        return Cart(self.owner, self.items + other.items)
+
+
+    def __str__(self):
+        return f"У {self.owner} товары: {self.items}"
+
+
+# cart_1 = Cart("Иван", [5000, 1500]) 
+# cart_2 = Cart("Иван", [3000, 2500])
+
+# print(len(cart_1))
+# merged = cart_1 + cart_2
+# print(len(merged))
+# print(merged)
+
+from models import Order, Product
+
+products = [
+    Product("Мышь", 1500, 20),
+    Product("Клавиатура", 3000, 15),
+    Product("Ноутбук", 50000, 10)
+]
+
+order_1 = Order("Иван", products, 1)
+
+products.sort(key=lambda x: x.price)
+
+for prod in products:
+    print(prod)
+
+print(order_1)
