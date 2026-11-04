@@ -857,19 +857,142 @@ from models import Product, User, Order
 
 #         self._price = value 
 
-laptop = Product("Ноутбук", 50000, 10)
-total = laptop.get_total_price()
+# laptop = Product("Ноутбук", 50000, 10)
+# total = laptop.get_total_price()
 
-user = User("Иван Иванов", "ivan@test.ru")
-laptop = Product("Ноутбук", 50000, 1)
-mouse = Product("Мышь", 1500, 2)
-products = [laptop, mouse]
-order = Order(user, products)
+# user = User("Иван Иванов", "ivan@test.ru")
+# laptop = Product("Ноутбук", 50000, 1)
+# mouse = Product("Мышь", 1500, 2)
+# products = [laptop, mouse]
+# order = Order(user, products)
 
-print(user.get_info())
-print("Общая стоимость заказа:", order.total_price())
+# print(user.get_info())
+# print("Общая стоимость заказа:", order.total_price())
 
 
+# ==================
+# УРОК 16: ПРИНЦИПЫ ООП
+# ==================
 
+# Решение задачи от тимлида - иерархия платежей
+# (наследование, инкапсуляция, полиморфизм, абстракция)
+# class Payment:
+#     def __init__(self, amount):
+#         self.amount = amount
+
+#     def process_payment(self):
+#         raise NotImplementedError("Метод должен быть переопределен")
+
+
+# class CardPayment(Payment):
+#     def __init__(self, amount, card_number):
+#         super().__init__(amount)
+#         self.__card_number = card_number # Приватный атрибут
+
+#     def process_payment(self):
+#         # Доступ к приватному атрибуту только изнутри класса
+#         masked_card = "**** " + self.__card_number[-4:]
+#         return "Оплата картой " + masked_card + ": " + str(self.amount) + " руб."
+
+
+# class PayPalPayment(Payment):
+#     def __init__(self, amount, email):
+#         super().__init__(amount)
+#         self._email = email # Защищенный атрибут
+
+#     def process_payment(self):
+#         return "Оплата PayPal (" + self._email + "): " + str(self.amount) + " руб."
+
+# # Использование полиморфизма
+# payments = [
+#     CardPayment(1000, "1234 5678 9012 3456"),
+#     PayPalPayment(2000, "user@paypal.com"),
+# ]
+
+# for payment in payments:
+#     print(payment.process_payment()) # Единый интерфейс
+
+# Практика: Задание 1 - Наследование
    
         
+# class Delivery:
+
+#     def __init__(self, client_name, time, price):
+#         self.client_name = client_name
+#         self.time = time 
+#         self.price = price 
+
+
+#     def get_description(self) -> str:
+#         return f"Доставка: {self.client_name}, будет через: {self.time}, к оплате: {self.price}"
+
+
+# class StandardDelivery(Delivery):
+
+#     def __init__(self, client_name, time, price):
+#         super().__init__(client_name, time, price)
+
+
+#     def get_description(self):
+#         return f"Стандартная доставка: {self.client_name}, будет через: {self.time}, к оплате: {self.price}"
+
+
+# class ExpressDelivery(Delivery):
+
+#     def __init__(self, client_name, time, price):
+#         super().__init__(client_name, time, price)
+
+
+#     def get_description(self):
+#         return f"Экспресс доставка: {self.client_name}, будет через: {self.time} минут, к оплате: {self.price}"
+
+
+# main_delivery = Delivery("Иван", 40, 2000)
+# standard_delivery = StandardDelivery("Олег", 50, 3000)
+# express_delivery = ExpressDelivery("Антон", 60, 4000)
+# print(main_delivery.get_description())
+# print(standard_delivery.get_description())
+# print(express_delivery.get_description())
+
+# Практика: Задание 2 - Полиморфизм и инкапсуляция
+
+# class Product:
+    
+#     def __init__(self, name, price):
+#         self.name = name 
+#         self._price = price
+
+
+#     def final_price(self):
+#         return self._price
+
+
+# class DiscountProduct(Product):
+
+#     def __init__(self, name, price, discount):
+#         super().__init__(name, price)
+#         self._discount = discount
+
+#     def final_price(self):
+#         return self._price * (1 - self._discount)
+
+
+# class GiftProduct(Product):
+
+#     def __init__(self, name, price):
+#         self.name = name
+#         self._price = 0
+
+
+#     def final_price(self):
+#         return self._price
+
+from models import CardPayment, PayPalPayment
+
+payments = [
+    CardPayment(1000, "1234 5678 9012 3456"),
+    PayPalPayment(2000, "user@paypal.com")
+]
+
+for payment in payments:
+    print(payment.process_payment())
