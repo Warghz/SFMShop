@@ -987,12 +987,12 @@ from models import Product, User, Order
 #     def final_price(self):
 #         return self._price
 
-from models import CardPayment, PayPalPayment
+# from models import CardPayment, PayPalPayment
 
-payments = [
-    CardPayment(1000, "1234 5678 9012 3456"),
-    PayPalPayment(2000, "user@paypal.com")
-]
+# payments = [
+#     CardPayment(1000, "1234 5678 9012 3456"),
+#     PayPalPayment(2000, "user@paypal.com")
+# ]
 
 # for payment in payments:
     # print(payment.process_payment())
@@ -1000,28 +1000,28 @@ payments = [
 # Файл src/main.py
 # Практика: Задание 1 - Добавление __str__ и __repr__
 
-product = Product("Ноутбук", 5000, 10)
+# product = Product("Ноутбук", 5000, 10)
 
 # print(product)
 # print(repr(product))
 
-# Практика: Задание 2 - Корзина с __len__ и __add__
-class Cart:
-    def __init__(self, owner, items):
-        self.owner = owner
-        self.items = items
+# # Практика: Задание 2 - Корзина с __len__ и __add__
+# class Cart:
+#     def __init__(self, owner, items):
+#         self.owner = owner
+#         self.items = items
 
 
-    def __len__(self):
-        return len(self.items)
+#     def __len__(self):
+#         return len(self.items)
 
 
-    def __add__(self, other):
-        return Cart(self.owner, self.items + other.items)
+#     def __add__(self, other):
+#         return Cart(self.owner, self.items + other.items)
 
 
-    def __str__(self):
-        return f"У {self.owner} товары: {self.items}"
+#     def __str__(self):
+#         return f"У {self.owner} товары: {self.items}"
 
 
 # cart_1 = Cart("Иван", [5000, 1500]) 
@@ -1032,19 +1032,95 @@ class Cart:
 # print(len(merged))
 # print(merged)
 
-from models import Order, Product
+# from models import Order, Product
 
-products = [
-    Product("Мышь", 1500, 20),
-    Product("Клавиатура", 3000, 15),
-    Product("Ноутбук", 50000, 10)
-]
+# products = [
+#     Product("Мышь", 1500, 20),
+#     Product("Клавиатура", 3000, 15),
+#     Product("Ноутбук", 50000, 10)
+# ]
 
-order_1 = Order("Иван", products, 1)
+# order_1 = Order("Иван", products, 1)
 
-products.sort(key=lambda x: x.price)
+# products.sort(key=lambda x: x.price)
 
-for prod in products:
-    print(prod)
+# for prod in products:
+    # print(prod)
 
-print(order_1)
+# print(order_1)
+
+# ==================
+# УРОК 18: ОБРАБОТКА ИСКЛЮЧЕНИЙ (TRY/EXCEPT, RAISE)
+# ==================
+
+# Решение задачи от тимлида - валидация через raise и обработка через try/except
+# Проверки добавлены в src/models/product.py и src/models/user.py
+# from models import User
+
+# try:
+#     product = Product("Ноутбук", -50000, 10)
+# except ValueError as e:
+#     print("Ошибка при создании товара:", e)
+#     product = Product("Ноутбук", 0, 10)  # Создаем с корректными данными
+
+# try:
+#     user = User("Иван", "неверный_email")
+# except ValueError as e:
+#     print("Ошибка при создании пользователя:", e)
+#     user = User("Иван", "default@example.ru")
+
+
+# try:
+#     var_1 = int(input())
+#     var_2 = int(input())
+#     result = var_1 / var_2 
+# except ZeroDivisionError:
+#     print("Ошибка: деление на ноль!")
+# except TypeError:
+#     print("Ошибка: неверный тип данных!")
+# else:
+#     print("Результат:", result)
+
+
+# class Warehouse:
+
+#     def __init__(self, stock: dict):
+#         self.stock = stock
+
+
+#     def reserve(self, product, quantity):
+#         if quantity <= 0:
+#             raise ValueError("Количество товара может быть только положительным!")
+#         if product not in self.stock:
+#             raise KeyError("Такого товара нет на складе!")   
+#         if quantity > self.stock[product]:
+#             raise ValueError("Столко товара нет на складе!")
+
+#         self.stock[product] -= quantity
+#         return self.stock[product]
+
+
+# prod = {"Ноутбук": 5}
+# whouse = Warehouse(prod)
+
+# operations = [("Ноутбук", 3), ("Ноутбук", 1), ("Ноутбук", 10), ("Ноутбук", 0)]
+
+# for i in operations:
+#     whouse.reserve(i[0], i[1])
+
+availeble_products = ["Геймпад", "Калькулятор", "Мышка"]
+try:
+    prod = Product("Ноутбук", -100, 10)
+except ValueError as er:
+    print("Ошибка при создании товара:", er)
+
+try:
+    order = Order("Иван", "Ноутбук", 100, availeble_products)
+    order.add_product("Веб-камера")
+except KeyError as er:
+    print("Ошибка при создании товара:", *er.args)
+
+try:
+    user = User("Иван", "testmail")
+except ValueError as er:
+    print("Ошибка при создании пользователя", er)

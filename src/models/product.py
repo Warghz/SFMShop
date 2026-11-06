@@ -3,7 +3,11 @@ class Product:
 
     def __init__(self, name, price, quantity):
         self.name = name
+        if price < 0:
+            raise ValueError("Цена не может быть отрицательной!")
         self.price = price
+        if quantity < 0:
+            raise ValueError("Количество не может быть отрицательным!")
         self.quantity = quantity
 
     def get_total_price(self):
